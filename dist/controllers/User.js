@@ -3,7 +3,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getSIngleUser = exports.getUser = exports.createUser = void 0;
+exports.addToCart = exports.getSIngleUser = exports.getUser = exports.createUser = void 0;
+const mongoose_1 = __importDefault(require("mongoose"));
 const User_1 = __importDefault(require("../models/User"));
 const createUser = async (req, res) => {
     try {
@@ -46,3 +47,21 @@ const getSIngleUser = async (req, res) => {
     }
 };
 exports.getSIngleUser = getSIngleUser;
+const addToCart = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const { addToCart } = req.body;
+        if (!mongoose_1.default.Types.ObjectId.isValid(addToCart))
+            return res.status(400).json("addTo cart is not object id");
+        const getData = await User_1.default.findById(id);
+        if (!getData)
+            return res.status(404).json("First Create User");
+        getData.cart.push(new mongoose_1.default.Types.ObjectId(addToCart));
+        await getData.save();
+        return res.status(200).json(getData);
+    }
+    catch (error) {
+        return res.status(500).json(error);
+    }
+};
+exports.addToCart = addToCart;
