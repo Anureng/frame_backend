@@ -60,6 +60,6 @@ app.get('/api/greet', (req: Request, res: Response) => {
 });
 
 // // Start the server
-// app.listen(port, () => {
-//     console.log(`Server running at http://localhost:${port}`);
-// });
+app.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}`);
+});
