@@ -56,6 +56,6 @@ app.get('/api/greet', (req, res) => {
     return res.json({ message: `Hello, ${name}!` });
 });
 // // Start the server
-// app.listen(port, () => {
-//     console.log(`Server running at http://localhost:${port}`);
-// });
+app.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}`);
+});
