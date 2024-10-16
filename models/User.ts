@@ -4,6 +4,7 @@ import productModel from "./Product";
 interface IUser extends Document {
     name: string,
     email: string,
+    password: string,
     cart: mongoose.Types.ObjectId[];
 }
 

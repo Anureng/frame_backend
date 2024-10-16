@@ -2,25 +2,55 @@ import mongoose from "mongoose";
 import productModel from "../models/Product";
 import user from "../models/User";
 import { Request, Response } from 'express';
+import jwt from "jsonwebtoken"
 
+const jwtSecret = "THISISTHESECRETKEYOFDCODEBLOCKJSONWEBTOKENITSVERYBESTWEBSITETOSOLVEPROBLEMs";
 export const createUser = async (req: Request, res: Response): Promise<Response> => {
     try {
-        const { name, email } = req.body;
+        const { name, email, password } = req.body;
 
         // Create a new user
         const newUser = new user({
             name,
-            email
+            email,
+            password
         });
 
-        // Save the user to the database
-        await newUser.save();
+        const findUser = await user.findOne({ email })
+        if (findUser) return res.status(500).json("User Already Exist")
 
-        return res.status(201).json({ message: "User created successfully", user: newUser });
+        // Save the user to the database
+        const newUserData = await newUser.save();
+
+        const tokePayLoad = {
+            id: newUserData._id,
+            email: newUserData.email
+        }
+        const token = jwt.sign(tokePayLoad, jwtSecret, { expiresIn: "3d" })
+
+        return res.status(200).json({ newUserData, token });
     } catch (error: any) {
         return res.status(500).json({ error: error.message });
     }
 };
+
+export const login = async (req: Request, res: Response) => {
+    const { email, password } = req.body
+    try {
+        const getUser = await user.findOne({ email })
+        if (!getUser) return res.status(400).json("Invalid credentails")
+        const tokenPayload = {
+            id: getUser._id,
+            email: getUser.email
+        }
+
+        const token = jwt.sign(tokenPayload, jwtSecret, { expiresIn: "3d" })
+
+        return res.status(200).json({ getUser, token })
+    } catch (error) {
+        return res.status(500).json(error)
+    }
+}
 
 export const getUser = async (req: Request, res: Response) => {
     try {

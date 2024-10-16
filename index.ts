@@ -4,16 +4,17 @@ import { startStandaloneServer } from '@apollo/server/standalone';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 import { connectDb } from './database/database';
 import { expressMiddleware } from '@apollo/server/express4';
+import cors from "cors"
 import router from './routes/user';
 import { schema } from './graphql/schema/schema';
 import { getProductByID, getUser, getUserById, Product } from './graphql/resoolver/resolver';
 import routerProblem from './routes/problem';
-import { getProblem } from './controllers/problem';
 const app = express();
 const port = 3000;
 const mongoUri = 'mongodb+srv://nrgsidhu:test123@cluster0.gtad7.mongodb.net/'
 // Middleware to parse JSON
 app.use(express.json());
+app.use(cors())
 connectDb(mongoUri)
 const server = new ApolloServer({
     typeDefs: schema,
@@ -60,6 +61,6 @@ app.get('/api/greet', (req: Request, res: Response) => {
 });
 
 // // Start the server
-app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
-});
+// app.listen(port, () => {
+//     console.log(`Server running at http://localhost:${port}`);
+// });

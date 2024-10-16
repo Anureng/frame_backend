@@ -3,26 +3,55 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addToCart = exports.getSIngleUser = exports.getUser = exports.createUser = void 0;
+exports.addToCart = exports.getSIngleUser = exports.getUser = exports.login = exports.createUser = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 const User_1 = __importDefault(require("../models/User"));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const jwtSecret = "THISISTHESECRETKEYOFDCODEBLOCKJSONWEBTOKENITSVERYBESTWEBSITETOSOLVEPROBLEMs";
 const createUser = async (req, res) => {
     try {
-        const { name, email } = req.body;
+        const { name, email, password } = req.body;
         // Create a new user
         const newUser = new User_1.default({
             name,
-            email
+            email,
+            password
         });
+        const findUser = await User_1.default.findOne({ email });
+        if (findUser)
+            return res.status(500).json("User Already Exist");
         // Save the user to the database
-        await newUser.save();
-        return res.status(201).json({ message: "User created successfully", user: newUser });
+        const newUserData = await newUser.save();
+        const tokePayLoad = {
+            id: newUserData._id,
+            email: newUserData.email
+        };
+        const token = jsonwebtoken_1.default.sign(tokePayLoad, jwtSecret, { expiresIn: "3d" });
+        return res.status(200).json({ newUserData, token });
     }
     catch (error) {
         return res.status(500).json({ error: error.message });
     }
 };
 exports.createUser = createUser;
+const login = async (req, res) => {
+    const { email, password } = req.body;
+    try {
+        const getUser = await User_1.default.findOne({ email });
+        if (!getUser)
+            return res.status(400).json("Invalid credentails");
+        const tokenPayload = {
+            id: getUser._id,
+            email: getUser.email
+        };
+        const token = jsonwebtoken_1.default.sign(tokenPayload, jwtSecret, { expiresIn: "3d" });
+        return res.status(200).json({ getUser, token });
+    }
+    catch (error) {
+        return res.status(500).json(error);
+    }
+};
+exports.login = login;
 const getUser = async (req, res) => {
     try {
         const getUser = await User_1.default.find();

@@ -8,6 +8,7 @@ const express_1 = __importDefault(require("express"));
 const default_1 = require("@apollo/server/plugin/landingPage/default");
 const database_1 = require("./database/database");
 const express4_1 = require("@apollo/server/express4");
+const cors_1 = __importDefault(require("cors"));
 const user_1 = __importDefault(require("./routes/user"));
 const schema_1 = require("./graphql/schema/schema");
 const resolver_1 = require("./graphql/resoolver/resolver");
@@ -17,6 +18,7 @@ const port = 3000;
 const mongoUri = 'mongodb+srv://nrgsidhu:test123@cluster0.gtad7.mongodb.net/';
 // Middleware to parse JSON
 app.use(express_1.default.json());
+app.use((0, cors_1.default)());
 (0, database_1.connectDb)(mongoUri);
 const server = new server_1.ApolloServer({
     typeDefs: schema_1.schema,
@@ -56,6 +58,6 @@ app.get('/api/greet', (req, res) => {
     return res.json({ message: `Hello, ${name}!` });
 });
 // // Start the server
-app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
-});
+// app.listen(port, () => {
+//     console.log(`Server running at http://localhost:${port}`);
+// });
