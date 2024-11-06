@@ -9,8 +9,9 @@ import router from './routes/user';
 import { schema } from './graphql/schema/schema';
 import { getProductByID, getUser, getUserById, Product } from './graphql/resoolver/resolver';
 import routerProblem from './routes/problem';
+import { init } from './src/start.services';
 const app = express();
-const port = 3000;
+const port = 3001;
 const mongoUri = 'mongodb+srv://nrgsidhu:test123@cluster0.gtad7.mongodb.net/'
 // Middleware to parse JSON
 app.use(express.json());
@@ -49,17 +50,12 @@ startServer().catch(err => {
 app.use("/", router)
 app.use("/", routerProblem)
 
+init()
 // Basic route
 app.get('/', (req: Request, res: Response) => {
     res.send('Hello, TypeScript with Express!');
 });
 // const url = 'mongodb+srv://nrgsidhu:test123@cluster0.gtad7.mongodb.net/';
-// // API route
-app.get('/api/greet', (req: Request, res: Response) => {
-    const name = req.query.name || 'World';
-    return res.json({ message: `Hello, ${name}!` });
-});
-
 // // Start the server
 // app.listen(port, () => {
 //     console.log(`Server running at http://localhost:${port}`);

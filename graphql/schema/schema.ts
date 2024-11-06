@@ -16,10 +16,17 @@ type Product{
     stars: String
 }
 
+type  Comment{
+    _id:ID,
+    name:String,
+    discription:String
+}
+
 type Query{
     User:[User]
     singleUser(id:ID!):User
     Product:[Product]
+    Comment:[Comment]
     singleProduct(id:ID!):Product
 }
 

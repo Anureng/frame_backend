@@ -11,6 +11,11 @@ export const getUserById = async (params: any, args: { id: string }) => {
     return getUser
 }
 
+export const getCommentById = async (params: any, args: { id: string }) => {
+    const getComment = await user.findById(args.id)
+    return getComment
+}
+
 export const Product = async () => {
     const getProduct = await productModel.find()
     return getProduct

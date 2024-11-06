@@ -13,8 +13,9 @@ const user_1 = __importDefault(require("./routes/user"));
 const schema_1 = require("./graphql/schema/schema");
 const resolver_1 = require("./graphql/resoolver/resolver");
 const problem_1 = __importDefault(require("./routes/problem"));
+const start_services_1 = require("./src/start.services");
 const app = (0, express_1.default)();
-const port = 3000;
+const port = 3001;
 const mongoUri = 'mongodb+srv://nrgsidhu:test123@cluster0.gtad7.mongodb.net/';
 // Middleware to parse JSON
 app.use(express_1.default.json());
@@ -47,16 +48,12 @@ startServer().catch(err => {
 });
 app.use("/", user_1.default);
 app.use("/", problem_1.default);
+(0, start_services_1.init)();
 // Basic route
 app.get('/', (req, res) => {
     res.send('Hello, TypeScript with Express!');
 });
 // const url = 'mongodb+srv://nrgsidhu:test123@cluster0.gtad7.mongodb.net/';
-// // API route
-app.get('/api/greet', (req, res) => {
-    const name = req.query.name || 'World';
-    return res.json({ message: `Hello, ${name}!` });
-});
 // // Start the server
 // app.listen(port, () => {
 //     console.log(`Server running at http://localhost:${port}`);

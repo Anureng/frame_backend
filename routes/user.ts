@@ -1,5 +1,6 @@
 import { Router } from "express";
-import { addToCart, createUser, login } from "../controllers/User";
+import { createUser, login } from "../controllers/User";
+import { addToCart } from "../services/post";
 import { verifyJwt } from "../middleware/auth";
 
 const router = Router()

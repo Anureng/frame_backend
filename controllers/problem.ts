@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 
 export const createProblem = async (req: Request, res: Response): Promise<Response> => {
     try {
-        const { name, image, category, price, stars } = req.body;
+        const { name, image, category, price, stars, sizeVariants, colorVariants, stock, shippingInformation, warranty, discount, comment } = req.body;
 
 
         // Create a new user
@@ -12,7 +12,14 @@ export const createProblem = async (req: Request, res: Response): Promise<Respon
             image,
             category,
             price,
-            stars
+            stars,
+            sizeVariants,
+            colorVariants,
+            stock,
+            shippingInformation,
+            warranty,
+            discount,
+            comment
         });
 
         // Save the user to the database

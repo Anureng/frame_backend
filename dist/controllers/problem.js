@@ -7,14 +7,21 @@ exports.getProblemById = exports.getProblem = exports.createProblem = void 0;
 const Product_1 = __importDefault(require("../models/Product"));
 const createProblem = async (req, res) => {
     try {
-        const { name, image, category, price, stars } = req.body;
+        const { name, image, category, price, stars, sizeVariants, colorVariants, stock, shippingInformation, warranty, discount, comment } = req.body;
         // Create a new user
         const newUser = new Product_1.default({
             name,
             image,
             category,
             price,
-            stars
+            stars,
+            sizeVariants,
+            colorVariants,
+            stock,
+            shippingInformation,
+            warranty,
+            discount,
+            comment
         });
         // Save the user to the database
         await newUser.save();
