@@ -56,6 +56,6 @@ app.get('/', (req, res) => {
 });
 // const url = 'mongodb+srv://nrgsidhu:test123@cluster0.gtad7.mongodb.net/';
 // // Start the server
-app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
+app.listen(port1, () => {
+    console.log(`Server running at http://localhost:${port1}`);
 });
