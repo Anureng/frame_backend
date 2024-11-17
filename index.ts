@@ -12,6 +12,7 @@ import routerProblem from './routes/problem';
 import { init } from './src/start.services';
 const app = express();
 const port = 3001;
+const port1 = 3000;
 const mongoUri = 'mongodb+srv://nrgsidhu:test123@cluster0.gtad7.mongodb.net/'
 // Middleware to parse JSON
 app.use(express.json());
@@ -57,6 +58,6 @@ app.get('/', (req: Request, res: Response) => {
 });
 // const url = 'mongodb+srv://nrgsidhu:test123@cluster0.gtad7.mongodb.net/';
 // // Start the server
-// app.listen(port, () => {
-//     console.log(`Server running at http://localhost:${port}`);
-// });
+app.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}`);
+});

@@ -16,6 +16,7 @@ const problem_1 = __importDefault(require("./routes/problem"));
 const start_services_1 = require("./src/start.services");
 const app = (0, express_1.default)();
 const port = 3001;
+const port1 = 3000;
 const mongoUri = 'mongodb+srv://nrgsidhu:test123@cluster0.gtad7.mongodb.net/';
 // Middleware to parse JSON
 app.use(express_1.default.json());
@@ -55,6 +56,6 @@ app.get('/', (req, res) => {
 });
 // const url = 'mongodb+srv://nrgsidhu:test123@cluster0.gtad7.mongodb.net/';
 // // Start the server
-// app.listen(port, () => {
-//     console.log(`Server running at http://localhost:${port}`);
-// });
+app.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}`);
+});
